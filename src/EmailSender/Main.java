@@ -1,3 +1,5 @@
+package EmailSender;
+
 import EmailSender.Mail;
 import EmailSender.UserProfile;
 
