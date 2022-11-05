@@ -1,59 +1,55 @@
 package PhoneBooks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PhoneBook {
-    private List<Contact> contacts;
-    private HashMap<String, List<Contact>> groups;
+    private HashMap<String,Contact> contacts;
+    private HashMap<String, ContactsGroup> groups;
 
     public PhoneBook() {
-        contacts = new ArrayList<>();
+        contacts = new HashMap<>();
         groups = new HashMap<>();
     }
 
     public PhoneBook(List<Contact> contacts) {
-        this.contacts = contacts;
+        this.contacts = new HashMap<>();
         groups = new HashMap<>();
+
+        for (Contact contact : contacts) {
+            this.contacts.put(contact.getPhoneNumber(), contact);
+        }
     }
 
     public void addContact(Contact contact) {
-        if (!contacts.contains(contact))
-            contacts.add(contact);
+        if (!contacts.containsKey(contact.getPhoneNumber()))
+            this.contacts.put(contact.getPhoneNumber(), contact);
     }
 
     public Contact getContact(String number) {
-        for (Contact contact : contacts) {
-            if(Objects.equals(contact.getPhoneNumber(), number))
-                return contact;
-        }
-        return null;
+        return contacts.get(number);
     }
 
-    public Contact getContact(String number, String groupName) {
-        var contactList = groups.get(groupName);
-        if (contactList != null) {
-            for (Contact contact : contactList) {
-                if (Objects.equals(contact.getPhoneNumber(), number))
-                    return contact;
-            }
-        }
-        return null;
+    public HashMap<String, Contact> getContacts(String groupName) {
+        return groups.get(groupName).getContacts();
     }
 
     public void addGroup(String groupName, List<Contact> contactList) {
+        if (contactList == null)
+            groups.put(groupName, new ContactsGroup(groupName));
         if (!groups.containsKey(groupName))
-            groups.put(groupName, contactList);
-    }
-
-    public List<Contact> getGroup(String groupName) {
-        return groups.get(groupName);
+            groups.put(groupName, new ContactsGroup(groupName, contactList));
     }
 
     public void deleteGroup(String groupName) {
-            groups.remove(groupName);
+        groups.remove(groupName);
+    }
+
+    public void addContactToGroup(String phoneNumber, String groupName) {
+        groups.get(groupName).addContact(contacts.get(phoneNumber));
+    }
+
+    public ContactsGroup getGroup(String groupName) {
+        return groups.get(groupName);
     }
 }
 

@@ -21,15 +21,12 @@ public class Main {
         familyContacts.add(contact1);
         familyContacts.add(contact2);
 
+        pb1.addGroup("Friends", null);
+
         pb1.addGroup("Family", familyContacts);
 
-        var findGroup = pb1.getGroup("Family");
+        pb1.addContactToGroup(contact1.getPhoneNumber(), "Friends");
 
-        var findContact1 = pb1.getContact("+7 999 999 99 99");
-        var findContact2 = pb1.getContact("+7 999 999 99 99", "Family");
-        var findContact3 = pb1.getContact("+7 999 999 99 99", "IncorrectGroupName");
-
-        pb1.deleteGroup("Family");
         pb1.deleteGroup("IncorrectGroupName");
 
         PhoneBook pb2 = new PhoneBook(familyContacts);
