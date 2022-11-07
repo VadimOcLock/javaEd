@@ -1,15 +1,12 @@
 package StudentStatsCLI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Student> students = new ArrayList<>();
+        HashSet<Student> students = new HashSet<>();
         System.out.println("Формат ввода данных о студенте: \"ФИО, номер группы, номер студенческого билета\"\n");
 
         do {
@@ -20,9 +17,8 @@ public class Main {
 
             if (Objects.equals(inputText, "end")) {
                 System.out.println("Список студентов:");
-                for (Student student : students) {
+                for (Student student : students)
                     System.out.println("- " + student);
-                }
                 break;
             }
 
